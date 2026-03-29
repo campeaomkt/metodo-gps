@@ -167,7 +167,7 @@ export default function App() {
                   Método GPS • Eliab Campos
                 </motion.span>
                 
-                <h1 className="text-white font-display font-black text-5xl md:text-8xl lg:text-9xl leading-[0.8] tracking-tighter uppercase">
+                <h1 className="text-white font-display font-black text-3xl sm:text-4xl md:text-8xl lg:text-9xl leading-[0.8] tracking-tighter uppercase">
                   <span className="font-light opacity-60">DO</span> ZERO <br />
                   <span className="relative">
                     AOS <span className="text-white">10K</span>
@@ -194,10 +194,10 @@ export default function App() {
                 </p>
               </div>
 
-              <div className="pt-4 flex flex-col sm:flex-row items-center gap-8">
+              <div className="pt-4 flex flex-col sm:flex-row items-center gap-8 w-full sm:w-auto">
                 <button 
                   onClick={() => document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="group relative bg-brand-primary text-black font-display font-black text-lg px-10 md:px-12 py-4 md:py-5 rounded-none hover:bg-white transition-all duration-500 flex items-center gap-4 shadow-[0_20px_50px_rgba(0,255,157,0.2)]"
+                  className="w-full sm:w-auto group relative bg-brand-primary text-black font-display font-black text-base md:text-lg px-6 md:px-12 py-3.5 md:py-5 rounded-2xl hover:bg-white transition-all duration-500 flex items-center justify-center gap-4 shadow-[0_20px_50px_rgba(0,255,157,0.2)] whitespace-nowrap"
                 >
                   QUERO MEU ACESSO AGORA
                   <ArrowRight className="group-hover:translate-x-2 transition-transform duration-500" size={20} />
@@ -229,55 +229,48 @@ export default function App() {
         </div>
       </section>
 
-      {/* Video Intro Section */}
-      <section className="py-24 px-4">
+      {/* Image Intro Section */}
+      <section className="py-16 md:py-24 px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="relative aspect-video rounded-3xl overflow-hidden gradient-border group cursor-pointer">
+          <div className="relative rounded-2xl md:rounded-3xl overflow-hidden gradient-border shadow-2xl">
             <img 
-              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=2070" 
-              alt="Dashboard Preview" 
-              className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700"
+              src="https://eliabcamposteclas.com/wp-content/uploads/2026/03/ChatGPT-Image-29-de-mar.-de-2026-11_24_22.jpg" 
+              alt="Método GPS Dashboard" 
+              className="w-full h-auto object-cover"
               referrerPolicy="no-referrer"
             />
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40">
-              <div className="w-24 h-24 rounded-full bg-brand-primary flex items-center justify-center text-black shadow-2xl group-hover:scale-110 transition-transform">
-                <Play size={40} fill="currentColor" />
-              </div>
-              <h3 className="mt-8 text-2xl font-display font-bold">Aprenda com quem mata a cobra e mostra o pau.</h3>
-              <p className="mt-2 text-gray-400">Assista ao vídeo de introdução</p>
-            </div>
           </div>
           
-          <div className="mt-16 text-center max-w-3xl mx-auto space-y-6 text-lg text-gray-300">
+          <div className="mt-10 md:mt-16 text-center max-w-3xl mx-auto space-y-6 text-base md:text-lg text-gray-300">
             <p>Vou te ensinar o passo a passo do método que coloca <span className="text-brand-primary font-bold">R$ 10.000,00 no meu bolso todos os meses</span> vendendo infoprodutos no tráfego direto.</p>
-            <p className="font-bold text-white text-2xl">Sem aparecer, sem equipe e 100% com IA.</p>
+            <p className="font-bold text-white text-xl md:text-2xl">Sem aparecer, sem equipe e 100% com IA.</p>
             <p>Chega de tentar vender no Brasil saturado. É hora de surfar o <span className="text-brand-primary font-bold italic">Oceano Azul Latino</span>.</p>
           </div>
         </div>
       </section>
 
       {/* Episodes Grid */}
-      <section className="py-24 bg-white/5 px-4">
+      <section className="py-16 md:py-24 bg-white/5 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-display font-black text-center mb-16 uppercase tracking-tighter">
+          <h2 className="text-2xl md:text-4xl font-display font-black text-center mb-12 md:mb-16 uppercase tracking-tighter">
             Etapas do <span className="text-brand-primary">Método:</span>
           </h2>
           
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
             {episodes.map((ep) => (
               <motion.div 
                 key={ep.id}
                 whileInView={{ opacity: 1, x: 0 }}
                 initial={{ opacity: 0, x: ep.id % 2 === 0 ? 20 : -20 }}
                 viewport={{ once: true }}
-                className="flex gap-6 p-6 rounded-2xl bg-bg-card gradient-border hover:bg-white/5 transition-colors"
+                className="flex flex-col sm:flex-row gap-6 p-6 rounded-2xl bg-bg-card gradient-border hover:bg-white/5 transition-colors"
               >
-                <div className="flex-shrink-0 w-40 h-24 rounded-lg bg-black/50 flex items-center justify-center relative overflow-hidden">
+                <div className="flex-shrink-0 w-full sm:w-40 h-32 sm:h-24 rounded-lg bg-black/50 flex items-center justify-center relative overflow-hidden">
                   <Play size={24} className="text-brand-primary z-10" />
                   <div className="absolute top-2 left-2 text-[10px] font-mono text-gray-500 uppercase">ETAPA {ep.id}</div>
                 </div>
                 <div>
-                  <h4 className="text-xl font-display font-bold mb-2">Etapa {ep.id}: {ep.title}</h4>
+                  <h4 className="text-lg md:text-xl font-display font-bold mb-2">Etapa {ep.id}: {ep.title}</h4>
                   <p className="text-sm text-gray-400 leading-relaxed">{ep.desc}</p>
                 </div>
               </motion.div>
@@ -287,44 +280,44 @@ export default function App() {
       </section>
 
       {/* Results Section: Dollar Power */}
-      <section className="py-24 px-4">
+      <section className="py-16 md:py-24 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-4xl font-display font-black mb-6 uppercase tracking-tighter">
+          <h2 className="text-2xl md:text-4xl font-display font-black mb-6 uppercase tracking-tighter">
             Crie ofertas em <span className="text-brand-primary">qualquer idioma</span> e fature em <span className="text-brand-primary">Dólar</span>
           </h2>
-          <p className="text-xl text-gray-400 mb-16 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-400 mb-12 md:mb-16 max-w-3xl mx-auto">
             O Dólar é a moeda mais forte do mundo. Ganhar 5x mais com o mesmo esforço é o que separa os amadores dos verdadeiros players do digital. <span className="text-white font-bold">Proteja seu patrimônio e multiplique seu poder de compra.</span>
           </p>
           
-          <div className="grid sm:grid-cols-2 gap-8">
-            <div className="p-10 rounded-3xl bg-bg-card gradient-border relative overflow-hidden group">
+          <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
+            <div className="p-8 md:p-10 rounded-3xl bg-bg-card gradient-border relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                 <DollarSign size={80} />
               </div>
               <div className="flex items-center justify-center gap-2 mb-6">
                 <span className="text-2xl">🇺🇸</span>
-                <span className="font-bold uppercase tracking-widest text-sm text-gray-400">Mercado Global (USD)</span>
+                <span className="font-bold uppercase tracking-widest text-xs md:text-sm text-gray-400">Mercado Global (USD)</span>
               </div>
-              <div className="text-5xl font-display font-black text-brand-primary mb-2">$ 8.405,00</div>
-              <div className="text-xs text-gray-500 uppercase font-mono">Faturamento em Dólar</div>
+              <div className="text-4xl md:text-5xl font-display font-black text-brand-primary mb-2">$ 8.405,00</div>
+              <div className="text-[10px] md:text-xs text-gray-500 uppercase font-mono">Faturamento em Dólar</div>
               <div className="mt-6 pt-6 border-t border-white/5">
-                <div className="text-2xl font-display font-bold text-white">R$ 42.025,00</div>
+                <div className="text-xl md:text-2xl font-display font-bold text-white">R$ 42.025,00</div>
                 <div className="text-[10px] text-gray-500 uppercase">Conversão direta para Real</div>
               </div>
             </div>
             
-            <div className="p-10 rounded-3xl bg-bg-card gradient-border relative overflow-hidden group">
+            <div className="p-8 md:p-10 rounded-3xl bg-bg-card gradient-border relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                 <TrendingUp size={80} />
               </div>
               <div className="flex items-center justify-center gap-2 mb-6">
                 <span className="text-2xl">🌍</span>
-                <span className="font-bold uppercase tracking-widest text-sm text-gray-400">Poder de Escala</span>
+                <span className="font-bold uppercase tracking-widest text-xs md:text-sm text-gray-400">Poder de Escala</span>
               </div>
-              <div className="text-5xl font-display font-black text-brand-primary mb-2">5X MAIS</div>
-              <div className="text-xs text-gray-500 uppercase font-mono">Poder de Compra no Brasil</div>
+              <div className="text-4xl md:text-5xl font-display font-black text-brand-primary mb-2">5X MAIS</div>
+              <div className="text-[10px] md:text-xs text-gray-500 uppercase font-mono">Poder de Compra no Brasil</div>
               <div className="mt-6 pt-6 border-t border-white/5">
-                <p className="text-sm text-gray-400 leading-relaxed">
+                <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
                   Trabalhando para o mundo, você gasta em Real e ganha em Dólar. É a maior arbitragem financeira que existe hoje.
                 </p>
               </div>
@@ -354,42 +347,42 @@ export default function App() {
       </section>
 
       {/* Salary Comparison */}
-      <section className="py-24 bg-white/5 px-4">
+      <section className="py-16 md:py-24 bg-white/5 px-4">
         <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-display font-black italic mb-4 uppercase tracking-tighter">"Ah Eliab, mas o mercado é limitado..."</h2>
-            <p className="text-gray-400 text-lg">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-xl md:text-3xl font-display font-black italic mb-4 uppercase tracking-tighter">"Ah Eliab, mas o mercado é limitado..."</h2>
+            <p className="text-gray-400 text-base md:text-lg">
               Pare de olhar apenas para o seu quintal. O jogo é <span className="text-white font-bold">GLOBAL</span>. <br />
               Veja o ranking real dos salários mínimos pelo mundo e entenda por que o Brasil é o lugar mais difícil de enriquecer:
             </p>
           </div>
           
-          <div className="bg-bg-card rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-            <div className="grid grid-cols-3 p-6 bg-white/5 text-xs font-black uppercase tracking-[0.2em] text-gray-500 border-b border-white/5">
+          <div className="bg-bg-card rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+            <div className="grid grid-cols-3 p-4 md:p-6 bg-white/5 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-gray-500 border-b border-white/5">
               <span># País</span>
-              <span className="text-right">USD (Mensal)</span>
+              <span className="text-right">USD</span>
               <span className="text-right">Status</span>
             </div>
             <div className="divide-y divide-white/5">
               {salaries.map((s, i) => (
                 <div 
                   key={s.country} 
-                  className={`grid grid-cols-3 p-6 items-center transition-colors ${s.highlight ? 'bg-brand-secondary/10 border-l-4 border-brand-secondary' : 'hover:bg-white/5'}`}
+                  className={`grid grid-cols-3 p-4 md:p-6 items-center transition-colors ${s.highlight ? 'bg-brand-secondary/10 border-l-4 border-brand-secondary' : 'hover:bg-white/5'}`}
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="text-xs font-mono text-gray-500">
+                  <div className="flex items-center gap-2 md:gap-3">
+                    <span className="text-[10px] md:text-xs font-mono text-gray-500">
                       {s.rank}
                     </span>
-                    <span className={`font-display font-bold ${s.highlight ? 'text-brand-secondary' : 'text-white'}`}>{s.country}</span>
+                    <span className={`text-sm md:text-base font-display font-bold ${s.highlight ? 'text-brand-secondary' : 'text-white'}`}>{s.country}</span>
                   </div>
-                  <div className={`text-right font-mono font-bold ${s.highlight ? 'text-brand-secondary' : 'text-gray-300'}`}>
+                  <div className={`text-right text-sm md:text-base font-mono font-bold ${s.highlight ? 'text-brand-secondary' : 'text-gray-300'}`}>
                     ${s.usd.toLocaleString()}
                   </div>
                   <div className="text-right">
                     {s.highlight ? (
-                      <span className="bg-brand-secondary text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">Você está aqui</span>
+                      <span className="bg-brand-secondary text-white text-[8px] md:text-[10px] font-black px-2 md:px-3 py-1 rounded-full uppercase tracking-tighter">Você está aqui</span>
                     ) : (
-                      <span className="text-[10px] text-gray-600 font-bold uppercase tracking-widest">Mercado Alvo</span>
+                      <span className="text-[8px] md:text-[10px] text-gray-600 font-bold uppercase tracking-widest">Mercado Alvo</span>
                     )}
                   </div>
                 </div>
@@ -418,8 +411,8 @@ export default function App() {
             />
           </div>
           <div className="space-y-6">
-            <h2 className="text-4xl font-display font-black leading-tight">
-              QUEM É <br />
+            <h2 className="text-2xl md:text-4xl font-display font-black leading-tight">
+              QUEM É <br className="hidden md:block" />
               <span className="text-brand-primary">ELIAB CAMPOS?</span>
             </h2>
             <p className="text-lg text-gray-300 leading-relaxed">
@@ -436,59 +429,62 @@ export default function App() {
       </section>
 
       {/* Offer Section */}
-      <section id="oferta" className="py-24 px-4 bg-brand-primary/5">
+      <section id="oferta" className="py-16 md:py-24 px-4 bg-brand-primary/5">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-bg-card rounded-[40px] p-8 md:p-16 border-2 border-brand-primary relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-8 opacity-10">
+          <div className="bg-bg-card rounded-3xl md:rounded-[40px] p-6 md:p-16 border-2 border-brand-primary relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-8 opacity-10 hidden md:block">
               <Target size={200} className="text-brand-primary" />
             </div>
             
             <div className="relative z-10 text-center">
-              <h2 className="text-3xl md:text-5xl font-display font-black mb-8">
+              <h2 className="text-xl md:text-5xl font-display font-black mb-8">
                 MÉTODO GPS <br />
                 <span className="text-brand-primary">DO ZERO AOS 10K POR MÊS</span>
               </h2>
               
               <div className="space-y-4 mb-12 text-left max-w-md mx-auto">
-                <div className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="text-brand-primary" size={20} />
+                <div className="flex items-center gap-3 text-gray-300 text-sm md:text-base">
+                  <CheckCircle2 className="text-brand-primary flex-shrink-0" size={20} />
                   <span>Documentário criando o produto ao vivo</span>
                 </div>
-                <div className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="text-brand-primary" size={20} />
+                <div className="flex items-center gap-3 text-gray-300 text-sm md:text-base">
+                  <CheckCircle2 className="text-brand-primary flex-shrink-0" size={20} />
                   <span>Suporte Individual via Whatsapp</span>
                 </div>
-                <div className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="text-brand-primary" size={20} />
+                <div className="flex items-center gap-3 text-gray-300 text-sm md:text-base">
+                  <CheckCircle2 className="text-brand-primary flex-shrink-0" size={20} />
                   <span>Acesso Vitalício</span>
                 </div>
-                <div className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="text-brand-primary" size={20} />
+                <div className="flex items-center gap-3 text-gray-300 text-sm md:text-base">
+                  <CheckCircle2 className="text-brand-primary flex-shrink-0" size={20} />
                   <span>Direito á atualizações futuras</span>
                 </div>
-                <div className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="text-brand-primary" size={20} />
+                <div className="flex items-center gap-3 text-gray-300 text-sm md:text-base">
+                  <CheckCircle2 className="text-brand-primary flex-shrink-0" size={20} />
                   <span>Todos os Bônus inclusos</span>
                 </div>
-                <div className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="text-brand-primary" size={20} />
+                <div className="flex items-center gap-3 text-gray-300 text-sm md:text-base">
+                  <CheckCircle2 className="text-brand-primary flex-shrink-0" size={20} />
                   <span>Garantia Incondicional</span>
                 </div>
               </div>
               
               <div className="mb-10">
-                <div className="text-gray-500 line-through text-2xl mb-2">De R$ 997,00</div>
-                <div className="text-6xl md:text-8xl font-display font-black text-white mb-2">
+                <div className="text-gray-500 line-through text-xl md:text-2xl mb-2">De R$ 497,00</div>
+                <div className="text-4xl sm:text-5xl md:text-8xl font-display font-black text-white mb-2">
                   12x R$ 20,37
                 </div>
-                <div className="text-xl text-brand-primary font-bold uppercase tracking-widest">
+                <div className="text-lg md:text-xl text-brand-primary font-bold uppercase tracking-widest">
                   ou R$ 197,00 à vista
                 </div>
               </div>
               
-              <button className="w-full bg-brand-primary text-black font-display font-bold text-2xl py-6 rounded-2xl hover:scale-[1.02] transition-transform shadow-[0_0_40px_rgba(0,255,157,0.3)] mb-6">
+              <a 
+                href="https://pay.kiwify.com.br/kGgbHqf"
+                className="block w-full bg-brand-primary text-black font-display font-black text-lg md:text-2xl py-4 md:py-6 rounded-2xl hover:scale-[1.02] transition-transform shadow-[0_0_40px_rgba(0,255,157,0.3)] mb-6 text-center"
+              >
                 GARANTIR MINHA VAGA AGORA
-              </button>
+              </a>
               
               <p className="text-gray-500 text-sm flex items-center justify-center gap-2">
                 <ShieldCheck size={16} /> Compra 100% segura • Garantia Incondicional
@@ -501,7 +497,7 @@ export default function App() {
       {/* Bonus Section */}
       <section className="py-24 px-4">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl font-display font-black text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-display font-black text-center mb-16">
             BÔNUS <span className="text-brand-primary">EXCLUSIVOS</span>
           </h2>
           
@@ -534,7 +530,7 @@ export default function App() {
       {/* FAQ Section */}
       <section className="py-24 px-4 bg-bg-card/50">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-4xl font-display font-black text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-display font-black text-center mb-16">
             PERGUNTAS <span className="text-brand-primary">FREQUENTES</span>
           </h2>
           
@@ -563,6 +559,15 @@ export default function App() {
               question="A Kiwify é uma plataforma segura?" 
               answer="Sim, a Kiwify é uma das maiores e mais seguras plataformas de infoprodutos do Brasil. Seus dados estão 100% protegidos e a transação é criptografada."
             />
+          </div>
+
+          <div className="mt-12 md:mt-16 flex justify-center">
+            <button 
+              onClick={() => document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' })}
+              className="w-full sm:w-auto bg-brand-primary text-black font-display font-black text-base md:text-xl px-8 py-4 md:px-12 md:py-5 rounded-2xl hover:scale-105 transition-transform shadow-[0_0_40px_rgba(0,255,157,0.3)] flex items-center justify-center gap-3"
+            >
+              GARANTIR MINHA VAGA <ChevronRight size={24} />
+            </button>
           </div>
         </div>
       </section>
