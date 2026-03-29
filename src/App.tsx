@@ -120,13 +120,13 @@ export default function App() {
         </div>
 
         {/* Author Image: Sophisticated Integration */}
-        <div className="relative md:absolute right-0 top-0 w-full md:w-[85%] h-[50vh] md:h-full z-0">
+        <div className="relative md:absolute right-0 top-0 w-full md:w-[85%] h-[35vh] md:h-full z-0">
           <div className="relative w-full h-full">
             {/* Mobile Image */}
             <img 
               src="https://eliabcamposteclas.com/wp-content/uploads/2026/03/ChatGPT-Image-29-de-mar.-de-2026-09_21_58-1.jpg" 
               alt="Eliab Campos Mobile" 
-              className="w-full h-full object-cover object-center opacity-100 md:hidden block"
+              className="w-full h-full object-cover object-top opacity-100 md:hidden block"
               referrerPolicy="no-referrer"
             />
             {/* Desktop Image */}
@@ -148,7 +148,7 @@ export default function App() {
         {/* Refined Money Texture Overlay */}
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/money.png')] opacity-[0.03] z-20 pointer-events-none mix-blend-screen" />
 
-        <div className="max-w-7xl mx-auto px-6 w-full relative z-30 py-8 md:py-24">
+        <div className="max-w-7xl mx-auto px-6 w-full relative z-30 pt-0 pb-12 md:py-24">
           <div className="max-w-4xl flex flex-col items-center md:items-start text-center md:text-left">
             {/* Text Content */}
             <motion.div
