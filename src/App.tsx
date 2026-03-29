@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { motion } from "motion/react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { 
   Play, 
   CheckCircle2, 
@@ -14,87 +15,219 @@ import {
   MessageSquare,
   Gift,
   ChevronRight,
+  ChevronDown,
   Target,
   DollarSign,
   Rocket
 } from "lucide-react";
 
 const episodes = [
-  { id: 1, title: "O Começo do Zero", desc: "Iniciante, eu não esqueci de você. Peguei um perfil do Facebook virgem que nunca tinha rodado anúncio, criei toda a estrutura e fiz o aquecimento do absoluto zero." },
-  { id: 2, title: "Espionagem", desc: "Sem nem saber qual produto eu ia vender, fui direto na biblioteca de anúncios e mostrei como encontrar produtos milionários ocultos que são inexplorados." },
-  { id: 3, title: "Modelagem Cultural", desc: "Depois de encontrar a oferta em português, transformei ela numa versão em espanhol, adaptada pra cultura e linguagem do mercado latino." },
-  { id: 4, title: "Criativos Infinitos", desc: "Aqui mais uma vez eu usei somente IA para fazer tudo: avatar, copy e edição. Um método que me permite produzir criativos sem limites." },
-  { id: 5, title: "Teste Inteligente", desc: "Sem sair torrando dinheiro igual um maluco, usei minha metodologia de teste rápido de criativos pra descobrir se a oferta tinha futuro." },
-  { id: 6, title: "Otimização de Escala", desc: "Como subir tudo do jeito certo para não tomar bloqueio. Identifiquei onde estava o problema e usei meu processo de otimização." },
-  { id: 7, title: "O Entregável em App", desc: "Transformei a oferta em um aplicativo (sem programar e em minutos). Isso reduziu reembolso e aumentou a percepção de valor." },
-  { id: 8, title: "Upsell e Downsell", desc: "Criei ofertas complementares de upsell e downsell, entreguei os scripts prontos e ensinei como aumentar o faturamento." },
-  { id: 9, title: "Trackeamento Avançado", desc: "Como eu não manjo nada disso, chamei meu mano especialista pra cuidar do trackeamento. Esse processo faz você vender com até 40% a mais de lucro." },
-  { id: 10, title: "Escala com 1 Campanha Só", desc: "Depois de deixar tudo redondo, escalei o produto usando o 'Método de 1 Campanha Só' até bater 10k por mês já na primeira semana." },
+  { id: 1, title: "Concepção e Ideia", desc: "O primeiro passo para o sucesso. Aprenda a identificar nichos lucrativos e produtos com alta demanda reprimida, garantindo que você comece no caminho do lucro real." },
+  { id: 2, title: "Mineração de Ofertas", desc: "Aprenda a encontrar as ofertas que já estão faturando alto no mercado. Use a inteligência competitiva para filtrar o que realmente funciona e economizar tempo e dinheiro." },
+  { id: 3, title: "Modelagem Estratégica", desc: "Esqueça o 'copia e cola'. Isso não traz resultados. Vou te ensinar a forma estratégica de modelar o que funciona, adaptando para o seu contexto e criando uma oferta única e imbatível." },
+  { id: 4, title: "Página de Vendas Express", desc: "Crie uma página de vendas premium e de alta conversão em apenas 5 minutos. Sem precisar de programadores ou designers caros, com apenas alguns cliques." },
+  { id: 5, title: "Entregáveis Profissionais", desc: "Crie produtos e bônus de alto valor percebido em minutos. Aprenda a entregar exatamente o que o seu cliente deseja com uma qualidade que gera autoridade imediata." },
+  { id: 6, title: "Funil de Vendas Lucrativo", desc: "O divisor de águas do digital. Enquanto a maioria erra aqui, você terá a estrutura exata para guiar seu cliente do primeiro contato até a compra final." },
+  { id: 7, title: "Meta Ads do Zero ao Avançado", desc: "Domine a ferramenta de anúncios mais poderosa do mundo. Aprenda a subir campanhas com a estrutura correta para evitar bloqueios e maximizar o seu ROI." },
+  { id: 8, title: "Análise de Métricas", desc: "Não jogue no escuro. Entenda cada número do seu funil e saiba exatamente onde o seu dinheiro está rendendo mais e onde precisa de ajustes." },
+  { id: 9, title: "Otimização Método GPS", desc: "O segredo do lucro alto. Saiba exatamente o que fazer e quando fazer para ajustar suas engrenagens e faturar muito mais com o mesmo investimento." },
+  { id: 10, title: "Escala Explosiva", desc: "Hora de crescer. Conheça os variados tipos de escalas e estruturas de campanhas para levar o seu faturamento do zero aos 10k e além." },
 ];
 
 const salaries = [
-  { country: "Costa Rica", usd: 750 },
-  { country: "Panamá", usd: 637 },
-  { country: "Uruguai", usd: 629 },
-  { country: "Chile", usd: 595 },
-  { country: "Guatemala", usd: 530 },
-  { country: "México", usd: 528 },
-  { country: "Equador", usd: 482 },
-  { country: "Bolívia", usd: 477 },
-  { country: "Rep. Dominicana", usd: 476 },
-  { country: "Colômbia", usd: 470 },
-  { country: "Paraguai", usd: 442 },
-  { country: "Honduras", usd: 342 },
-  { country: "Peru", usd: 336 },
-  { country: "El Salvador", usd: 305 },
-  { country: "Brasil", usd: 298, highlight: true },
-  { country: "Nicarágua", usd: 255 },
-  { country: "Argentina", usd: 231 },
-  { country: "Cuba", usd: 5 },
-  { country: "Venezuela", usd: 1 },
+  { rank: "01", country: "Luxemburgo", usd: 2710 },
+  { rank: "02", country: "Austrália", usd: 2320 },
+  { rank: "03", country: "Holanda", usd: 2180 },
+  { rank: "04", country: "Nova Zelândia", usd: 2100 },
+  { rank: "05", country: "Reino Unido", usd: 2050 },
+  { rank: "06", country: "Alemanha", usd: 1980 },
+  { rank: "07", country: "Canadá", usd: 1850 },
+  { rank: "08", country: "França", usd: 1780 },
+  { rank: "09", country: "Bélgica", usd: 1750 },
+  { rank: "10", country: "Irlanda", usd: 1700 },
+  { rank: "11", country: "Estados Unidos", usd: 1250 },
+  { rank: "12", country: "Espanha", usd: 1180 },
+  { rank: "13", country: "Coreia do Sul", usd: 1150 },
+  { rank: "14", country: "Japão", usd: 1080 },
+  { rank: "15", country: "Portugal", usd: 950 },
+  { rank: "67", country: "Brasil", usd: 280, highlight: true },
 ];
+
+const lifestyleImages = [
+  "https://eliabcamposteclas.com/wp-content/uploads/2026/03/IMG_0930.jpg",
+  "https://eliabcamposteclas.com/wp-content/uploads/2026/03/IMG_1006.jpg",
+  "https://eliabcamposteclas.com/wp-content/uploads/2026/03/IMG_0919.jpg",
+  "https://eliabcamposteclas.com/wp-content/uploads/2026/03/IMG_0939.jpg",
+  "https://eliabcamposteclas.com/wp-content/uploads/2026/03/IMG_0927.jpg",
+  "https://eliabcamposteclas.com/wp-content/uploads/2026/03/IMG_0989.jpg",
+  "https://eliabcamposteclas.com/wp-content/uploads/2026/03/IMG_0991.jpg",
+  "https://eliabcamposteclas.com/wp-content/uploads/2026/03/IMG_0940.jpg",
+  "https://eliabcamposteclas.com/wp-content/uploads/2026/03/IMG_0929.jpg",
+];
+
+function FAQItem({ question, answer }: { question: string; answer: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="border-b border-white/10">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full py-6 flex items-center justify-between text-left group"
+      >
+        <span className="text-lg font-display font-bold group-hover:text-brand-primary transition-colors">
+          {question}
+        </span>
+        <ChevronDown 
+          className={`text-brand-primary transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
+          size={24} 
+        />
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <p className="pb-6 text-gray-400 leading-relaxed">
+              {answer}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function App() {
   return (
     <div className="min-h-screen bg-bg-dark selection:bg-brand-primary selection:text-black">
       {/* Hero Section */}
-      <section className="relative pt-20 pb-32 overflow-hidden px-4">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_var(--color-brand-primary)_0%,_transparent_70%)] opacity-5 pointer-events-none" />
-        
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-brand-primary font-display font-bold tracking-widest text-sm mb-6 uppercase">
-              Método GPS — Eliab Campos dos Santos
-            </h2>
-            <h1 className="text-5xl md:text-8xl font-display font-black leading-tight mb-8">
-              DO ZERO AOS <br />
-              <span className="text-brand-primary glow-text">10K POR MÊS</span>
-            </h1>
-            <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-              Eu sei que você está cansado de teoria. Por isso você vai ver na prática um infoproduto sendo criado do <span className="text-white font-bold">ABSOLUTO ZERO</span> até atingir 10 mil reais por mês.
-            </p>
+      <section className="relative min-h-screen flex flex-col md:flex-row md:items-center overflow-hidden bg-bg-dark">
+        {/* Background Effects */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          {/* Refined Background Glows */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[80%] bg-blue-900/20 blur-[150px] rounded-full" />
+            <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[70%] bg-brand-secondary/10 blur-[150px] rounded-full" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] h-[60%] bg-brand-primary/5 blur-[150px] rounded-full" />
+          </div>
+
+          {/* Elegant World Map Overlay */}
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/world-map.png')] opacity-[0.07] z-10 mix-blend-overlay" />
+        </div>
+
+        {/* Author Image: Sophisticated Integration */}
+        <div className="relative md:absolute right-0 top-0 w-full md:w-[85%] h-[50vh] md:h-full z-0">
+          <div className="relative w-full h-full">
+            {/* Mobile Image */}
+            <img 
+              src="https://eliabcamposteclas.com/wp-content/uploads/2026/03/ChatGPT-Image-29-de-mar.-de-2026-09_21_58-1.jpg" 
+              alt="Eliab Campos Mobile" 
+              className="w-full h-full object-cover object-center opacity-100 md:hidden block"
+              referrerPolicy="no-referrer"
+            />
+            {/* Desktop Image */}
+            <img 
+              src="https://eliabcamposteclas.com/wp-content/uploads/2026/03/ChatGPT-Image-29-de-mar.-de-2026-09_32_39.jpg" 
+              alt="Eliab Campos Desktop" 
+              className="w-full h-full object-cover object-[center_left] opacity-100 hidden md:block"
+              referrerPolicy="no-referrer"
+            />
+            {/* Sophisticated Gradient Masking */}
+            <div className="absolute inset-0 bg-gradient-to-r from-bg-dark via-bg-dark/40 to-transparent md:block hidden" />
+            <div className="absolute inset-0 bg-gradient-to-t from-bg-dark via-transparent to-transparent md:hidden block" />
             
-            <button className="bg-brand-primary text-black font-display font-bold text-xl px-12 py-6 rounded-full hover:scale-105 transition-transform shadow-[0_0_30px_rgba(0,255,157,0.4)] flex items-center gap-3 mx-auto">
-              QUERO MEU ACESSO AGORA <ArrowRight size={24} />
-            </button>
-          </motion.div>
+            {/* Subtle Light Leak Effect */}
+            <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-brand-primary/5 via-transparent to-transparent pointer-events-none" />
+          </div>
+        </div>
+
+        {/* Refined Money Texture Overlay */}
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/money.png')] opacity-[0.03] z-20 pointer-events-none mix-blend-screen" />
+
+        <div className="max-w-7xl mx-auto px-6 w-full relative z-30 py-8 md:py-24">
+          <div className="max-w-4xl flex flex-col items-center md:items-start text-center md:text-left">
+            {/* Text Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="space-y-10 flex flex-col items-center md:items-start"
+            >
+              <div className="space-y-4 flex flex-col items-center md:items-start">
+                <motion.span 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="inline-block text-brand-primary font-display font-bold tracking-[0.4em] text-[10px] uppercase"
+                >
+                  Método GPS • Eliab Campos
+                </motion.span>
+                
+                <h1 className="text-white font-display font-black text-5xl md:text-8xl lg:text-9xl leading-[0.8] tracking-tighter uppercase">
+                  <span className="font-light opacity-60">DO</span> ZERO <br />
+                  <span className="relative">
+                    AOS <span className="text-white">10K</span>
+                  </span>
+                </h1>
+                
+                <div className="inline-flex items-center gap-4">
+                  <div className="h-[1px] w-8 md:w-12 bg-brand-secondary hidden md:block" />
+                  <div className="bg-brand-secondary px-6 md:px-8 py-2 md:py-3 transform -skew-x-6">
+                    <span className="text-white font-display font-black text-xl md:text-4xl uppercase italic tracking-tighter block transform skew-x-6">
+                      POR MÊS
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-6 max-w-xl flex flex-col items-center md:items-start">
+                <p className="text-xl md:text-3xl font-display font-medium text-white/95 leading-tight tracking-tight">
+                  Eu sei que você está cansado de teoria. <br />
+                  <span className="text-brand-primary italic">Chegou a hora da prática.</span>
+                </p>
+                <p className="text-base md:text-lg text-gray-400 leading-relaxed font-light">
+                  Você vai ver na prática um infoproduto sendo criado do <span className="text-white font-bold tracking-wider">ABSOLUTO ZERO</span> até atingir a marca de <span className="text-white border-b border-brand-primary/50">10 MIL REAIS</span> por mês.
+                </p>
+              </div>
+
+              <div className="pt-4 flex flex-col sm:flex-row items-center gap-8">
+                <button 
+                  onClick={() => document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="group relative bg-brand-primary text-black font-display font-black text-lg px-10 md:px-12 py-4 md:py-5 rounded-none hover:bg-white transition-all duration-500 flex items-center gap-4 shadow-[0_20px_50px_rgba(0,255,157,0.2)]"
+                >
+                  QUERO MEU ACESSO AGORA
+                  <ArrowRight className="group-hover:translate-x-2 transition-transform duration-500" size={20} />
+                </button>
+                
+                <div className="flex flex-col items-center md:items-start">
+                  <span className="text-[9px] text-gray-500 uppercase tracking-[0.3em] font-black mb-1">
+                    Status do Sistema
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-brand-primary rounded-full animate-pulse" />
+                    <span className="text-[10px] text-white font-bold uppercase tracking-widest">Vagas Disponíveis</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Sophisticated Marquee */}
+        <div className="absolute bottom-0 left-0 w-full bg-brand-secondary py-4 overflow-hidden border-t border-white/5 z-40">
+          <div className="animate-marquee whitespace-nowrap">
+            {[...Array(10)].map((_, i) => (
+              <span key={i} className="text-white font-display font-black text-lg mx-12 uppercase tracking-[0.2em] italic">
+                DO ZERO AOS 10K POR MÊS ★ MÉTODO GPS ★ ELIAB CAMPOS ★ 
+              </span>
+            ))}
+          </div>
         </div>
       </section>
-
-      {/* Marquee */}
-      <div className="bg-brand-secondary py-3 overflow-hidden border-y border-white/10">
-        <div className="animate-marquee whitespace-nowrap">
-          {[...Array(10)].map((_, i) => (
-            <span key={i} className="text-black font-display font-black text-sm mx-8 uppercase">
-              DO ZERO AOS 10K POR MÊS • MÉTODO GPS • ELIAB CAMPOS • DO ZERO AOS 10K POR MÊS • 
-            </span>
-          ))}
-        </div>
-      </div>
 
       {/* Video Intro Section */}
       <section className="py-24 px-4">
@@ -126,8 +259,8 @@ export default function App() {
       {/* Episodes Grid */}
       <section className="py-24 bg-white/5 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-display font-black text-center mb-16">
-            O QUE VOCÊ VAI <span className="text-brand-primary">DOMINAR</span>
+          <h2 className="text-4xl font-display font-black text-center mb-16 uppercase tracking-tighter">
+            Etapas do <span className="text-brand-primary">Método:</span>
           </h2>
           
           <div className="grid md:grid-cols-2 gap-8">
@@ -141,10 +274,10 @@ export default function App() {
               >
                 <div className="flex-shrink-0 w-40 h-24 rounded-lg bg-black/50 flex items-center justify-center relative overflow-hidden">
                   <Play size={24} className="text-brand-primary z-10" />
-                  <div className="absolute top-2 left-2 text-[10px] font-mono text-gray-500">EP.{ep.id}</div>
+                  <div className="absolute top-2 left-2 text-[10px] font-mono text-gray-500 uppercase">ETAPA {ep.id}</div>
                 </div>
                 <div>
-                  <h4 className="text-xl font-display font-bold mb-2">Ep.{ep.id} {ep.title}</h4>
+                  <h4 className="text-xl font-display font-bold mb-2">Etapa {ep.id}: {ep.title}</h4>
                   <p className="text-sm text-gray-400 leading-relaxed">{ep.desc}</p>
                 </div>
               </motion.div>
@@ -153,29 +286,69 @@ export default function App() {
         </div>
       </section>
 
-      {/* Results Section */}
+      {/* Results Section: Dollar Power */}
       <section className="py-24 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-display font-bold mb-12">No mercado latino você tem 70% mais chance de sucesso comparado a vender no Brasil.</h2>
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-4xl font-display font-black mb-6 uppercase tracking-tighter">
+            Crie ofertas em <span className="text-brand-primary">qualquer idioma</span> e fature em <span className="text-brand-primary">Dólar</span>
+          </h2>
+          <p className="text-xl text-gray-400 mb-16 max-w-3xl mx-auto">
+            O Dólar é a moeda mais forte do mundo. Ganhar 5x mais com o mesmo esforço é o que separa os amadores dos verdadeiros players do digital. <span className="text-white font-bold">Proteja seu patrimônio e multiplique seu poder de compra.</span>
+          </p>
           
           <div className="grid sm:grid-cols-2 gap-8">
-            <div className="p-8 rounded-3xl bg-bg-card gradient-border">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <span className="text-2xl">🇨🇴</span>
-                <span className="font-bold uppercase tracking-widest text-sm text-gray-400">Colômbia</span>
+            <div className="p-10 rounded-3xl bg-bg-card gradient-border relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <DollarSign size={80} />
               </div>
-              <div className="text-4xl font-display font-black text-brand-primary mb-2">R$ 42.023,62</div>
-              <div className="text-xs text-gray-500 uppercase">em faturamento este mês</div>
+              <div className="flex items-center justify-center gap-2 mb-6">
+                <span className="text-2xl">🇺🇸</span>
+                <span className="font-bold uppercase tracking-widest text-sm text-gray-400">Mercado Global (USD)</span>
+              </div>
+              <div className="text-5xl font-display font-black text-brand-primary mb-2">$ 8.405,00</div>
+              <div className="text-xs text-gray-500 uppercase font-mono">Faturamento em Dólar</div>
+              <div className="mt-6 pt-6 border-t border-white/5">
+                <div className="text-2xl font-display font-bold text-white">R$ 42.025,00</div>
+                <div className="text-[10px] text-gray-500 uppercase">Conversão direta para Real</div>
+              </div>
             </div>
             
-            <div className="p-8 rounded-3xl bg-bg-card gradient-border">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <span className="text-2xl">🇲🇽</span>
-                <span className="font-bold uppercase tracking-widest text-sm text-gray-400">México</span>
+            <div className="p-10 rounded-3xl bg-bg-card gradient-border relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <TrendingUp size={80} />
               </div>
-              <div className="text-4xl font-display font-black text-brand-primary mb-2">R$ 30.788,77</div>
-              <div className="text-xs text-gray-500 uppercase">em faturamento este mês</div>
+              <div className="flex items-center justify-center gap-2 mb-6">
+                <span className="text-2xl">🌍</span>
+                <span className="font-bold uppercase tracking-widest text-sm text-gray-400">Poder de Escala</span>
+              </div>
+              <div className="text-5xl font-display font-black text-brand-primary mb-2">5X MAIS</div>
+              <div className="text-xs text-gray-500 uppercase font-mono">Poder de Compra no Brasil</div>
+              <div className="mt-6 pt-6 border-t border-white/5">
+                <p className="text-sm text-gray-400 leading-relaxed">
+                  Trabalhando para o mundo, você gasta em Real e ganha em Dólar. É a maior arbitragem financeira que existe hoje.
+                </p>
+              </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Premium Lifestyle Carousel */}
+      <section className="py-12 overflow-hidden bg-black/20">
+        <div className="flex flex-col gap-8">
+          <div className="flex animate-marquee-slow whitespace-nowrap">
+            {[...lifestyleImages, ...lifestyleImages].map((img, i) => (
+              <div key={i} className="inline-block px-4">
+                <div className="w-[300px] h-[400px] md:w-[400px] md:h-[500px] rounded-3xl overflow-hidden gradient-border shadow-2xl">
+                  <img 
+                    src={img} 
+                    alt={`Lifestyle ${i}`} 
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -184,30 +357,50 @@ export default function App() {
       <section className="py-24 bg-white/5 px-4">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-2xl font-display font-bold italic mb-4">"Ah Eliab, mas o povo latino é pobre"</h2>
-            <p className="text-gray-400">Meu amigo, veja abaixo o ranking dos salários mínimos de toda a América Latina já convertidos para dólar:</p>
+            <h2 className="text-3xl font-display font-black italic mb-4 uppercase tracking-tighter">"Ah Eliab, mas o mercado é limitado..."</h2>
+            <p className="text-gray-400 text-lg">
+              Pare de olhar apenas para o seu quintal. O jogo é <span className="text-white font-bold">GLOBAL</span>. <br />
+              Veja o ranking real dos salários mínimos pelo mundo e entenda por que o Brasil é o lugar mais difícil de enriquecer:
+            </p>
           </div>
           
-          <div className="bg-bg-card rounded-3xl overflow-hidden border border-white/10">
-            <div className="grid grid-cols-3 p-4 bg-white/5 text-xs font-bold uppercase tracking-widest text-gray-500">
+          <div className="bg-bg-card rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+            <div className="grid grid-cols-3 p-6 bg-white/5 text-xs font-black uppercase tracking-[0.2em] text-gray-500 border-b border-white/5">
               <span># País</span>
-              <span className="text-right">USD</span>
-              <span className="text-right">Ação</span>
+              <span className="text-right">USD (Mensal)</span>
+              <span className="text-right">Status</span>
             </div>
             <div className="divide-y divide-white/5">
               {salaries.map((s, i) => (
-                <div key={i} className={`grid grid-cols-3 p-4 text-sm ${s.highlight ? 'bg-brand-secondary/20 text-brand-secondary font-bold' : 'text-gray-300'}`}>
-                  <span>{i + 1}. {s.country}</span>
-                  <span className="text-right">${s.usd}</span>
-                  <span className="text-right text-[10px] opacity-50">{s.highlight ? 'VOCÊ ESTÁ AQUI' : ''}</span>
+                <div 
+                  key={s.country} 
+                  className={`grid grid-cols-3 p-6 items-center transition-colors ${s.highlight ? 'bg-brand-secondary/10 border-l-4 border-brand-secondary' : 'hover:bg-white/5'}`}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-mono text-gray-500">
+                      {s.rank}
+                    </span>
+                    <span className={`font-display font-bold ${s.highlight ? 'text-brand-secondary' : 'text-white'}`}>{s.country}</span>
+                  </div>
+                  <div className={`text-right font-mono font-bold ${s.highlight ? 'text-brand-secondary' : 'text-gray-300'}`}>
+                    ${s.usd.toLocaleString()}
+                  </div>
+                  <div className="text-right">
+                    {s.highlight ? (
+                      <span className="bg-brand-secondary text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">Você está aqui</span>
+                    ) : (
+                      <span className="text-[10px] text-gray-600 font-bold uppercase tracking-widest">Mercado Alvo</span>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
           
-          <div className="mt-12 text-center">
-            <p className="text-xl font-display">O Brasil é o <span className="text-brand-secondary font-bold">15º da lista</span>. E você tentando vender aqui...</p>
-            <p className="text-gray-400 mt-4">Enquanto isso o povo latino tem mais poder de compra, menos concorrência no tráfego e um mercado três vezes maior pra explorar.</p>
+          <div className="mt-12 p-8 rounded-3xl bg-brand-secondary/10 border border-brand-secondary/20 text-center">
+            <p className="text-brand-secondary font-display font-bold text-xl italic">
+              "Enquanto você foca no Brasil, o mundo está pronto para pagar 5x mais pelo seu produto."
+            </p>
           </div>
         </div>
       </section>
@@ -218,9 +411,9 @@ export default function App() {
           <div className="relative">
             <div className="absolute -inset-4 bg-brand-primary/20 blur-3xl rounded-full" />
             <img 
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=1974" 
+              src="https://eliabcamposteclas.com/wp-content/uploads/2026/03/Fotos-Eliab-7-1.jpg" 
               alt="Eliab Campos" 
-              className="relative rounded-3xl w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              className="relative rounded-3xl w-full aspect-[4/5] object-cover transition-all duration-500"
               referrerPolicy="no-referrer"
             />
           </div>
@@ -230,10 +423,10 @@ export default function App() {
               <span className="text-brand-primary">ELIAB CAMPOS?</span>
             </h2>
             <p className="text-lg text-gray-300 leading-relaxed">
-              Eu larguei a carreira de <span className="text-white font-bold">oficial do exército</span> para viver do digital. Você largaria um cargo público concursado, ganhando R$ 10 mil por mês e com aposentadoria garantida de mais de R$ 20 mil?
+              Eu abri mão da minha própria <span className="text-white font-bold">oficina mecânica</span> para viver do digital. Você teria coragem de deixar um negócio físico estabelecido, com clientes e faturamento certo, para apostar tudo na internet?
             </p>
             <p className="text-lg text-gray-300 leading-relaxed">
-              Pois eu larguei. Esse é o tamanho da minha convicção no que eu faço, e no que vou te ensinar. Troquei a "estabilidade" porque acreditei que o digital era a única forma de eu ficar rico de verdade em pouco tempo.
+              Pois eu fiz isso. Esse é o tamanho da minha convicção no que eu faço, e no que vou te ensinar. Troquei a graxa e o trabalho pesado porque acreditei que o digital era a única forma de eu ter liberdade e ficar rico de verdade em pouco tempo.
             </p>
             <p className="text-xl font-display font-bold text-white italic">
               E agora é a sua vez de viver esse sonho também. Conte comigo pra te ensinar TUDO O QUE SEI.
@@ -243,7 +436,7 @@ export default function App() {
       </section>
 
       {/* Offer Section */}
-      <section className="py-24 px-4 bg-brand-primary/5">
+      <section id="oferta" className="py-24 px-4 bg-brand-primary/5">
         <div className="max-w-4xl mx-auto">
           <div className="bg-bg-card rounded-[40px] p-8 md:p-16 border-2 border-brand-primary relative overflow-hidden">
             <div className="absolute top-0 right-0 p-8 opacity-10">
@@ -259,29 +452,37 @@ export default function App() {
               <div className="space-y-4 mb-12 text-left max-w-md mx-auto">
                 <div className="flex items-center gap-3 text-gray-300">
                   <CheckCircle2 className="text-brand-primary" size={20} />
-                  <span>Documentário criando o produto do zero</span>
+                  <span>Documentário criando o produto ao vivo</span>
                 </div>
                 <div className="flex items-center gap-3 text-gray-300">
                   <CheckCircle2 className="text-brand-primary" size={20} />
-                  <span>Calls Tira-Dúvidas Mensais AO VIVO</span>
+                  <span>Suporte Individual via Whatsapp</span>
                 </div>
                 <div className="flex items-center gap-3 text-gray-300">
                   <CheckCircle2 className="text-brand-primary" size={20} />
-                  <span>Suporte VIP no WhatsApp</span>
+                  <span>Acesso Vitalício</span>
                 </div>
                 <div className="flex items-center gap-3 text-gray-300">
                   <CheckCircle2 className="text-brand-primary" size={20} />
-                  <span>Acesso vitalício às atualizações</span>
+                  <span>Direito á atualizações futuras</span>
+                </div>
+                <div className="flex items-center gap-3 text-gray-300">
+                  <CheckCircle2 className="text-brand-primary" size={20} />
+                  <span>Todos os Bônus inclusos</span>
+                </div>
+                <div className="flex items-center gap-3 text-gray-300">
+                  <CheckCircle2 className="text-brand-primary" size={20} />
+                  <span>Garantia Incondicional</span>
                 </div>
               </div>
               
               <div className="mb-10">
                 <div className="text-gray-500 line-through text-2xl mb-2">De R$ 997,00</div>
                 <div className="text-6xl md:text-8xl font-display font-black text-white mb-2">
-                  12x R$ 39,62
+                  12x R$ 20,37
                 </div>
                 <div className="text-xl text-brand-primary font-bold uppercase tracking-widest">
-                  ou R$ 397,00 à vista
+                  ou R$ 197,00 à vista
                 </div>
               </div>
               
@@ -290,7 +491,7 @@ export default function App() {
               </button>
               
               <p className="text-gray-500 text-sm flex items-center justify-center gap-2">
-                <ShieldCheck size={16} /> Compra 100% segura • 7 dias de garantia
+                <ShieldCheck size={16} /> Compra 100% segura • Garantia Incondicional
               </p>
             </div>
           </div>
@@ -306,43 +507,63 @@ export default function App() {
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="p-8 rounded-3xl bg-bg-card gradient-border relative overflow-hidden group">
-              <Gift className="text-brand-primary mb-6 group-hover:scale-110 transition-transform" size={40} />
-              <h4 className="text-xl font-display font-bold mb-4">Calls com Especialistas</h4>
-              <p className="text-gray-400 text-sm">Calls com convidados especialistas em espionagem, criativos, funil de quiz, VSL e muito mais.</p>
+              <Users className="text-brand-primary mb-6 group-hover:scale-110 transition-transform" size={40} />
+              <h4 className="text-xl font-display font-bold mb-4">Grupo de Networking</h4>
+              <p className="text-gray-400 text-sm">Conecte-se com outros players que estão no mesmo campo de batalha que você e troque experiências valiosas.</p>
             </div>
             
             <div className="p-8 rounded-3xl bg-bg-card gradient-border relative overflow-hidden group">
-              <TrendingUp className="text-brand-primary mb-6 group-hover:scale-110 transition-transform" size={40} />
-              <h4 className="text-xl font-display font-bold mb-4">Análise de Ofertas</h4>
-              <p className="text-gray-400 text-sm">Análise prática de mais duas ofertas minhas que escalaram + de 1 milhão cada.</p>
+              <MessageSquare className="text-brand-primary mb-6 group-hover:scale-110 transition-transform" size={40} />
+              <h4 className="text-xl font-display font-bold mb-4">Suporte Individual via Whatsapp</h4>
+              <p className="text-gray-400 text-sm">Tire suas dúvidas diretamente com quem vive o mercado e acelere sua jornada rumo aos resultados.</p>
             </div>
             
             <div className="p-8 rounded-3xl bg-bg-card gradient-border relative overflow-hidden group">
-              <DollarSign className="text-brand-primary mb-6 group-hover:scale-110 transition-transform" size={40} />
-              <h4 className="text-xl font-display font-bold mb-4">Masterclass Contábil</h4>
-              <p className="text-gray-400 text-sm">Tudo o que você precisa saber sobre impostos e contabilidade para vendas internacionais.</p>
+              <Rocket className="text-brand-primary mb-6 group-hover:scale-110 transition-transform" size={40} />
+              <h4 className="text-xl font-display font-bold mb-4">Atualizações Gratuitas</h4>
+              <p className="text-gray-400 text-sm">Tenha acesso a todas as novas estratégias e aulas que eu adicionar ao método sem pagar nada a mais.</p>
             </div>
           </div>
           
           <div className="mt-12 p-6 rounded-2xl bg-brand-secondary/10 border border-brand-secondary/20 text-center">
-            <p className="text-brand-secondary font-bold">Bônus somados que valem mais de R$ 3.000,00, mas que você vai pagar R$ 0,00 ao entrar agora.</p>
+            <p className="text-brand-secondary font-bold">Bônus somados que valem mais de R$ 1.000,00, mas que você vai pagar R$ 0,00 ao entrar agora.</p>
           </div>
         </div>
       </section>
 
-      {/* WhatsApp Section */}
-      <section className="py-24 px-4 bg-emerald-500/5">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex p-6 rounded-full bg-emerald-500/20 text-emerald-500 mb-8">
-            <MessageSquare size={48} />
+      {/* FAQ Section */}
+      <section className="py-24 px-4 bg-bg-card/50">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-4xl font-display font-black text-center mb-16">
+            PERGUNTAS <span className="text-brand-primary">FREQUENTES</span>
+          </h2>
+          
+          <div className="space-y-4">
+            <FAQItem 
+              question="Como vou receber o acesso ao Método GPS?" 
+              answer="O acesso é imediato após a confirmação do pagamento. Você receberá um e-mail da Kiwify com seus dados de acesso à nossa Área de Membros Premium, onde todas as aulas e bônus já estão disponíveis."
+            />
+            <FAQItem 
+              question="Preciso de um computador para começar?" 
+              answer="Não necessariamente. Você consegue assistir às aulas e aplicar boa parte das estratégias pelo celular, mas para a criação das páginas e gestão de anúncios, um computador facilitará muito o seu trabalho."
+            />
+            <FAQItem 
+              question="O Método GPS tem garantia?" 
+              answer="Sim! Você tem uma Garantia Incondicional de 7 dias. Se por qualquer motivo você achar que o conteúdo não é para você, basta solicitar o reembolso na Kiwify e devolvemos 100% do seu dinheiro."
+            />
+            <FAQItem 
+              question="Por quanto tempo terei acesso ao curso?" 
+              answer="O seu acesso é Vitalício. Isso significa que você pode assistir às aulas no seu ritmo e terá acesso a todas as atualizações futuras sem nenhum custo adicional."
+            />
+            <FAQItem 
+              question="Como funciona o suporte?" 
+              answer="Nosso suporte é individual e humanizado via WhatsApp. Você não falará com robôs, mas sim com especialistas prontos para tirar suas dúvidas e te ajudar a destravar seus resultados."
+            />
+            <FAQItem 
+              question="A Kiwify é uma plataforma segura?" 
+              answer="Sim, a Kiwify é uma das maiores e mais seguras plataformas de infoprodutos do Brasil. Seus dados estão 100% protegidos e a transação é criptografada."
+            />
           </div>
-          <h2 className="text-4xl font-display font-black mb-6">COMUNIDADE GPS</h2>
-          <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-            Faça parte do maior Grupo de Networking de Low Ticket em Dólar no WhatsApp. Troque experiências com quem já está faturando.
-          </p>
-          <button className="bg-emerald-500 text-white font-display font-bold text-xl px-12 py-6 rounded-full hover:scale-105 transition-transform flex items-center gap-3 mx-auto">
-            ENTRAR NO GRUPO VIP <ChevronRight size={24} />
-          </button>
         </div>
       </section>
 
