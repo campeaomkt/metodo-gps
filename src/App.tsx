@@ -148,7 +148,7 @@ export default function App() {
         {/* Refined Money Texture Overlay */}
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/money.png')] opacity-[0.03] z-20 pointer-events-none mix-blend-screen" />
 
-        <div className="max-w-7xl mx-auto px-6 w-full relative z-30 pt-0 pb-12 md:py-24">
+        <div className="max-w-7xl mx-auto px-6 w-full relative z-30 pt-0 pb-24 md:py-24">
           <div className="max-w-4xl flex flex-col items-center md:items-start text-center md:text-left">
             {/* Text Content */}
             <motion.div
@@ -203,13 +203,13 @@ export default function App() {
                   <ArrowRight className="group-hover:translate-x-2 transition-transform duration-500" size={20} />
                 </button>
                 
-                <div className="flex flex-col items-center md:items-start">
-                  <span className="text-[9px] text-gray-500 uppercase tracking-[0.3em] font-black mb-1">
+                <div className="flex flex-col items-center md:items-start bg-white/5 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
+                  <span className="text-[8px] md:text-[9px] text-gray-400 uppercase tracking-[0.3em] font-black mb-0.5">
                     Status do Sistema
                   </span>
                   <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 bg-brand-primary rounded-full animate-pulse" />
-                    <span className="text-[10px] text-white font-bold uppercase tracking-widest">Vagas Disponíveis</span>
+                    <div className="w-1.5 h-1.5 bg-brand-primary rounded-full animate-pulse shadow-[0_0_10px_rgba(0,255,157,0.5)]" />
+                    <span className="text-[9px] md:text-[10px] text-white font-bold uppercase tracking-widest">Vagas Disponíveis</span>
                   </div>
                 </div>
               </div>
@@ -218,10 +218,10 @@ export default function App() {
         </div>
 
         {/* Sophisticated Marquee */}
-        <div className="absolute bottom-0 left-0 w-full bg-brand-secondary py-4 overflow-hidden border-t border-white/5 z-40">
+        <div className="absolute bottom-0 left-0 w-full bg-brand-secondary py-3 md:py-4 overflow-hidden border-t border-white/5 z-40">
           <div className="animate-marquee whitespace-nowrap">
             {[...Array(10)].map((_, i) => (
-              <span key={i} className="text-white font-display font-black text-lg mx-12 uppercase tracking-[0.2em] italic">
+              <span key={i} className="text-white font-display font-black text-sm md:text-lg mx-8 md:mx-12 uppercase tracking-[0.2em] italic">
                 DO ZERO AOS 10K POR MÊS ★ MÉTODO GPS ★ ELIAB CAMPOS ★ 
               </span>
             ))}
