@@ -472,15 +472,15 @@ export default function App() {
               <div className="mb-10">
                 <div className="text-gray-500 line-through text-xl md:text-2xl mb-2">De R$ 497,00</div>
                 <div className="text-4xl sm:text-5xl md:text-8xl font-display font-black text-white mb-2">
-                  12x R$ 20,37
+                  12x R$ 10,03
                 </div>
                 <div className="text-lg md:text-xl text-brand-primary font-bold uppercase tracking-widest">
-                  ou R$ 197,00 à vista
+                  ou R$ 97,00 à vista
                 </div>
               </div>
               
               <a 
-                href="https://pay.kiwify.com.br/kGgbHqf"
+                href="https://pay.kiwify.com.br/5GA3kdp"
                 className="block w-full bg-brand-primary text-black font-display font-black text-lg md:text-2xl py-4 md:py-6 rounded-2xl hover:scale-[1.02] transition-transform shadow-[0_0_40px_rgba(0,255,157,0.3)] mb-6 text-center"
               >
                 GARANTIR MINHA VAGA AGORA
