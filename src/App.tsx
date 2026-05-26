@@ -103,7 +103,7 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-bg-dark selection:bg-brand-primary selection:text-black">
+    <div className="min-h-screen bg-bg-dark selection:bg-brand-primary selection:text-black overflow-x-hidden w-full relative">
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col md:flex-row md:items-center overflow-hidden bg-bg-dark">
         {/* Background Effects */}
